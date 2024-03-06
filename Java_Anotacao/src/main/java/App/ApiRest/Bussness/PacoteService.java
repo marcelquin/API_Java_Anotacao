@@ -1,5 +1,6 @@
 package App.ApiRest.Bussness;
 
+import App.ApiRest.Bussness.FileServer.FileServerService;
 import App.ApiRest.Domain.Pacote;
 import App.ApiRest.Infra.Exceptions.EntityNotFoundException;
 import App.ApiRest.Infra.Exceptions.NullargumentsException;
@@ -33,18 +34,16 @@ import static org.apache.tomcat.util.http.fileupload.FileUploadBase.CONTENT_DISP
 @Service
 public class PacoteService implements PacoteGateway {
 
-    @Value("${App.caminhozip}")
+    @Value("#{environment['App.caminhozip']}")
     private String caminhozip;
 
     private final PacoteRepository pacoteRepository;
     private final ArquivoRepository arquivoRepository;
-    private final BackupService backupService;
     private final FileServerService fileServerService;
 
-    public PacoteService(PacoteRepository pacoteRepository, ArquivoRepository arquivoRepository, BackupService backupService, FileServerService fileServerService) {
+    public PacoteService(PacoteRepository pacoteRepository, ArquivoRepository arquivoRepository, FileServerService fileServerService) {
         this.pacoteRepository = pacoteRepository;
         this.arquivoRepository = arquivoRepository;
-        this.backupService = backupService;
         this.fileServerService = fileServerService;
     }
 
@@ -201,8 +200,8 @@ public class PacoteService implements PacoteGateway {
                 entity.setArquivos(arquivoEntity);
                 pacoteRepository.save(entity);
                 fileServerService.Upload(codigo,files);
-                backupService.NovoEvento(OpcaoBackup.PACOTE_CRIADO, entity.getNome(),entity.getDescrisao(),
-                        entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
+                //backupService.NovoEvento(OpcaoBackup.PACOTE_CRIADO, entity.getNome(),entity.getDescrisao(),
+                //        entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
                 Pacote response = new Pacote(entity.getNome(),entity.getDescrisao(), entity.getCodigo(),
                         entity.getLinguagem(),entity.getArquivos().getArquivos(),entity.getDataCriacao());
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -230,8 +229,8 @@ public class PacoteService implements PacoteGateway {
                     if(descrisao != null){ entity.setDescrisao(descrisao);}
                     entity.setTimeStamp(LocalDateTime.now());
                     pacoteRepository.save(entity);
-                    backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
-                            entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
+                    //backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
+                    //        entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
                     Pacote response = new Pacote(entity.getNome(),entity.getDescrisao(), entity.getCodigo(),
                             entity.getLinguagem(),entity.getArquivos().getArquivos(),entity.getDataCriacao());
                     return new ResponseEntity<>(response, HttpStatus.OK);
@@ -269,8 +268,8 @@ public class PacoteService implements PacoteGateway {
                         arquivoEntity.setArquivos(arquivos);
                         arquivoEntity.setTimeStamp(LocalDateTime.now());
                         arquivoRepository.save(arquivoEntity);
-                        backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
-                                entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
+                        //backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
+                        //        entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
                         fileServerService.Update(entity.getCodigo(), entity.getArquivos().getArquivos(), files);
                         Pacote response = new Pacote(entity.getNome(),entity.getDescrisao(), entity.getCodigo(),
                                 entity.getLinguagem(),entity.getArquivos().getArquivos(),entity.getDataCriacao());
@@ -312,8 +311,8 @@ public class PacoteService implements PacoteGateway {
                         arquivoEntity.getArquivos().addAll(arquivos);
                         arquivoEntity.setTimeStamp(LocalDateTime.now());
                         arquivoRepository.save(arquivoEntity);
-                        backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
-                                entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
+                        //backupService.NovoEvento(OpcaoBackup.PACOTE_EDITADO, entity.getNome(),entity.getDescrisao(),
+                        //        entity.getCodigo(),entity.getLinguagem(),entity.getDataCriacao(),entity.getArquivos().getArquivos());
                         fileServerService.AddFile(entity.getCodigo(), files);
                         Pacote response = new Pacote(entity.getNome(),entity.getDescrisao(), entity.getCodigo(),
                                 entity.getLinguagem(),entity.getArquivos().getArquivos(),entity.getDataCriacao());

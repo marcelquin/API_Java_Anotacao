@@ -1,7 +1,7 @@
 package App.Config;
 
-import App.ApiRest.Bussness.BackupService;
-import App.ApiRest.Bussness.FileServerService;
+
+import App.ApiRest.Bussness.FileServer.FileServerService;
 import App.ApiRest.Infra.Gateway.PacoteGateway;
 import App.ApiRest.Infra.UseCase.UseCasePacoteGet;
 import App.ApiRest.Infra.UseCase.UseCasePacotePost;
@@ -29,7 +29,7 @@ public class PacoteConfig {
 
     @Bean
     PacoteService pacoteService(PacoteRepository pacoteRepository, ArquivoRepository arquivoRepository,
-                                BackupService backupService, FileServerService fileServerService)
-    { return new PacoteService(pacoteRepository, arquivoRepository, backupService, fileServerService);}
+                                FileServerService fileServerService)
+    { return new PacoteService(pacoteRepository, arquivoRepository, fileServerService);}
 
 }

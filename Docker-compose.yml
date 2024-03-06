@@ -1,62 +1,30 @@
 version: "3"
 services:
 
-  api_backup:
-    build: /Backup/Java_AnotacaoBackup
-    ports:
-      - 8090:8090
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://bd_backup:5432/db_java_aotacaobackup
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    depends_on:
-      - bd_backup
-
-
   api_api:
     build: /Java_Anotacao
+    container_name: Java_Anotacao
     ports:
       - 8080:8080
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://bd_api:3306/Java_Anotacoes
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd_api:3306/Java_Anotacoes?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=mh8q23pr99
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - spring.servlet.multipart.max-file-size=350MB
+      - spring.servlet.multipart.max-request-size=350MB
+      - app.caminhoImagem=/app/
+      - app.caminhoImagemZip=/app/Zip/
     depends_on:
       - bd_api
-      - api_backup
-      - api_fileserver
+    volumes:
+      - file:/app/
+      - filezip:/app/Zip/
     restart: on-failure
-
-  api_fileserver:
-    build: /FileServer/java_AnotacoesFileServer
-    ports:
-      - 8091:8091
-    environment:
-      - spring.servlet.multipart.max-file-size=200MB
-      - spring.servlet.multipart.max-request-size=200MB
-      - app.caminhoImagem=//app//dados//
-      - app.caminhoImagemZip=//app//dados//Zip//
-    volumes:
-      - file:/app/dados/
-      - filezip:/app/dados/Zip/
-
-
-  bd_backup:
-    image: 'postgres'
-    environment:
-      - 'POSTGRES_DB=db_java_aotacaobackup'
-      - 'POSTGRES_PASSWORD=mh8q23pr99'
-      - 'POSTGRES_USER=admin'
-    ports:
-      - 5432:5432
-    volumes:
-      - bd_backup:/app/database/bd_backup
-
 
   bd_api:
     image: 'mysql'
+    container_name: bd_api
     environment:
       - 'MYSQL_DATABASE=Java_Anotacoes'
       - 'MYSQL_PASSWORD=mh8q23pr99'
@@ -72,4 +40,3 @@ volumes:
   file:
   filezip:
   bd_api:
-  bd_backup:

@@ -1,4 +1,4 @@
-package App.ApiRest.Bussness.Util;
+package App.ApiRest.Bussness.FileServer;
 
 import org.springframework.stereotype.Component;
 
