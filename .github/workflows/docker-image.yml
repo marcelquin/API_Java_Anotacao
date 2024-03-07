@@ -1,4 +1,4 @@
-name: Java_anotationv1
+name: java_anotation-latest
 
 on:
   push:
