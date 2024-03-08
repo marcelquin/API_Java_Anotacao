@@ -27,4 +27,6 @@ jobs:
           context: ./Java_Anotacao/
           file: ./Java_Anotacao//Dockerfile
           push: true
-          tags: javaanotarion:latest
+          tags: 
+            javaanotarion:v${{ github.run_number }}
+            javaanotarion:latest
