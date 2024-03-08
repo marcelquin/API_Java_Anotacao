@@ -26,6 +26,5 @@ jobs:
       with:   
           context: ./Java_Anotacao/src
           push: true
-          tags: 
-            javaanotarion:${{ github.run_number }}
-            javaanotarion:latest
+          tags: javaanotarion:${{ github.run_number }}
+            
