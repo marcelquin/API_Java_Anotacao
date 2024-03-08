@@ -28,4 +28,4 @@ jobs:
           file: ./Java_Anotacao//Dockerfile
           push: true
           tags:
-            javaanotarion:latest
+            javaanotarion
