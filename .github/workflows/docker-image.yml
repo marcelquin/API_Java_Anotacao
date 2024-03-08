@@ -14,5 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build de imagem docker
+      uses: docker/build-push-action@v5.2.0
+      with:   
+          context: ./Java_Anotacao
+          file: ./Dockerfile
+          push: true
+          tags:
+            java_anotarion:v1
+            java_anotarion:latest
