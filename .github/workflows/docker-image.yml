@@ -17,8 +17,8 @@ jobs:
     - name: Build de imagem docker
       uses: docker/build-push-action@v5.2.0
       with:   
-          context: ./Java_Anotacao
-          file: ./Dockerfile
+          context: ./Java_Anotacao/
+          file: ./Java_Anotacao//Dockerfile
           push: true
           tags:
             javaanotarion:latest
