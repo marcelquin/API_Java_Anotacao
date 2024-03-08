@@ -25,7 +25,7 @@ jobs:
       uses: docker/build-push-action@v5.2.0
       with:   
           context: ./Java_Anotacao/
-          file: ./Java_Anotacao//Dockerfile
+          file: ./Java_Anotacao/Dockerfile
           push: true
           tags: 
             javaanotarion:${{ github.run_number }}
