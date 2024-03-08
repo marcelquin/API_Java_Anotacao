@@ -26,5 +26,5 @@ jobs:
       with:   
           context: ./Java_Anotacao/
           push: true
-          tags: javaanotarion:${{ github.run_number }}
+          tags: ${{ secrets.DOCKERUSER }}/javaanotarion:${{ github.run_number }}
             
