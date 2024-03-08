@@ -29,4 +29,3 @@ jobs:
           push: true
           tags:
             javaanotarion:latest
-            javaanotarion:v1
