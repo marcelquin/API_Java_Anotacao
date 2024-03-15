@@ -27,4 +27,13 @@ jobs:
           context: ./Java_Anotacao/
           push: true
           tags: ${{ secrets.DOCKERUSER }}/javaanotarion:${{ github.run_number }}
-            
+
+    - name: compose
+      uses: isbang/compose-action@v1.5.1
+      with:
+        compose-file: "./docker/docker-compose.yml"
+        down-flags: "--volumes"
+        services: |
+          api_api
+          bd_api
+    
