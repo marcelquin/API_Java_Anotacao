@@ -1,4 +1,4 @@
-name: CI
+name: Compose
 
 on:
   push:
@@ -20,13 +20,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKERUSER }}
         password: ${{ secrets.DOCKERPASSWORD }}
-    
-    - name: Build and push
-      uses: docker/build-push-action@v5.2.0
-      with:   
-          context: ./Java_Anotacao/
-          push: true
-          tags: ${{ secrets.DOCKERUSER }}/javaanotarion:${{ github.run_number }}
 
     - name: compose
       uses: isbang/compose-action@v1.5.1
